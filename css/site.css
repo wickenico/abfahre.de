@@ -38,3 +38,19 @@ body {
   max-height: 100vh;
   margin: auto;
 }
+
+.video-container-wrapper {
+  max-width: 100%;
+  width: 600px;
+  left: 0;
+  right:0;
+  margin-top: 30px;
+  }
+
+  .gif-container-wrapper {
+    max-width: 100%;
+    width: 600px;
+    left: 0;
+    right:0;
+    margin-top: -80px;
+    }
