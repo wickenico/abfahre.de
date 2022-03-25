@@ -54,3 +54,7 @@ body {
     right:0;
     margin-top: -80px;
     }
+
+    .fa:hover {
+      color: green !important;
+  }
