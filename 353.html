@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>353 Shop</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            background-color: teal;
+            color: white;
+            padding: 20px 0;
+            margin: 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .shop-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .product-card {
+            background-color: white;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 240px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+            border-bottom: 1px solid #f0f0f0;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-card h3 {
+            font-size: 18px;
+            margin: 15px 10px 5px;
+            color: #4a4a4a;
+        }
+
+        .product-card p {
+            font-size: 14px;
+            color: #777;
+            margin: 5px 10px;
+        }
+
+        .product-card span {
+            display: block;
+            font-size: 16px;
+            font-weight: bold;
+            color: #e91e63;
+            margin: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: teal;
+            color: white;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Welcome to 353 Shop</h1>
+    <div class="shop-container" id="shop-container"></div>
+    <div class="footer">
+        &copy; 2024 353 Shop. All rights reserved by Ayayay353.
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const shopContainer = document.getElementById('shop-container');
+
+            fetch('https://fakestoreapi.com/products')
+                .then(response => response.json())
+                .then(products => {
+                    products.forEach(product => {
+                        const productCard = document.createElement('div');
+                        productCard.className = 'product-card';
+
+                        productCard.innerHTML = `
+                            <img src="${product.image}" alt="${product.title}">
+                            <h3>${product.title}</h3>
+                            <p>${product.category}</p>
+                            <p>${product.description.substring(0, 60)}...</p>
+                            <span>$${product.price}</span>
+                        `;
+
+                        shopContainer.appendChild(productCard);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching products:', error);
+                    shopContainer.innerHTML = '<p>Failed to load products. Please try again later.</p>';
+                });
+        });
+    </script>
+</body>
+
+</html>
