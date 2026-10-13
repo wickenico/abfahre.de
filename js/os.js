@@ -207,9 +207,100 @@
     })
   );
 
-  if (document.body.dataset.page === "start" && !localStorage.getItem("abfahre-alltag")) {
-    setTimeout(showAlltag, 600);
+  function afterUnlock() {
+    if (document.body.dataset.page === "start" && !localStorage.getItem("abfahre-alltag")) {
+      setTimeout(showAlltag, 600);
+    }
   }
+
+  /* Lockscreen */
+
+  function showLock() {
+    const lock = el(`
+      <div class="lock" role="dialog" aria-modal="true" aria-label="Gesperrt">
+        <div class="lock__glass lock__head">
+          <div class="lock__status"><span>abfahre.de</span><span>353 %</span></div>
+          <div class="lock__top">
+            <p class="lock__time"></p>
+            <p class="lock__date"></p>
+          </div>
+        </div>
+        <div class="lock__wall" aria-hidden="true"><span>353</span></div>
+        <div class="lock__glass lock__bottom">
+          <div class="slider">
+            <span class="slider__text" aria-hidden="true">slide to abfahre</span>
+            <button class="slider__knob" type="button" aria-label="Entsperren">➜</button>
+          </div>
+        </div>
+      </div>`);
+    document.body.append(lock);
+
+    const time = lock.querySelector(".lock__time");
+    const date = lock.querySelector(".lock__date");
+    const update = () => {
+      const now = new Date();
+      time.textContent = now.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
+      date.textContent = now.toLocaleDateString("de-DE", { weekday: "long", day: "numeric", month: "long" });
+    };
+    update();
+    const timer = setInterval(update, 10000);
+
+    const slider = lock.querySelector(".slider");
+    const knob = lock.querySelector(".slider__knob");
+    const text = lock.querySelector(".slider__text");
+    knob.focus({ preventScroll: true });
+
+    const sound = new Audio("/sounds/unlock.mp3");
+    sound.preload = "auto";
+
+    const unlock = () => {
+      sound.play().catch(() => {});
+      sessionStorage.setItem("abfahre-unlocked", "1");
+      clearInterval(timer);
+      lock.classList.add("is-unlocking");
+      setTimeout(() => {
+        lock.remove();
+        afterUnlock();
+      }, reducedMotion ? 0 : 550);
+    };
+
+    const setX = (x) => {
+      knob.style.transform = `translateX(${x}px)`;
+      text.style.opacity = String(1 - x / 120);
+    };
+
+    knob.addEventListener("pointerdown", (e) => {
+      const max = slider.clientWidth - knob.offsetWidth - 10;
+      const startX = e.clientX;
+      knob.classList.remove("is-snapping");
+      knob.setPointerCapture(e.pointerId);
+
+      const move = (ev) => setX(Math.min(Math.max(ev.clientX - startX, 0), max));
+      const up = (ev) => {
+        knob.removeEventListener("pointermove", move);
+        knob.removeEventListener("pointerup", up);
+        knob.removeEventListener("pointercancel", up);
+        if (ev.type === "pointerup" && ev.clientX - startX >= max * 0.9) {
+          setX(max);
+          unlock();
+        } else {
+          knob.classList.add("is-snapping");
+          setX(0);
+        }
+      };
+      knob.addEventListener("pointermove", move);
+      knob.addEventListener("pointerup", up);
+      knob.addEventListener("pointercancel", up);
+    });
+
+    knob.addEventListener("click", (e) => {
+      if (e.detail === 0) unlock();
+    });
+  }
+
+  const isDev = ["localhost", "127.0.0.1"].includes(location.hostname);
+  if (isDev || (isMobile() && !sessionStorage.getItem("abfahre-unlocked"))) showLock();
+  else afterUnlock();
 
   /* Terminal */
 

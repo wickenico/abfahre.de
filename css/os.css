@@ -538,12 +538,156 @@ button {
 
   .dialog {
     position: fixed;
+    width: calc(100% - 32px);
     margin: 0;
   }
 
   .sticker {
     display: none;
   }
+}
+
+/* Lockscreen (nur Handy) */
+
+.lock {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  background: var(--rot);
+  color: var(--weiss);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  transition: opacity 0.35s ease 0.15s;
+  touch-action: none;
+}
+
+.lock__glass {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05) 50%, transparent 50%),
+    rgba(0, 0, 0, 0.62);
+  transition: transform 0.4s ease-in;
+}
+
+.lock__status {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 10px;
+  background: rgba(0, 0, 0, 0.85);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.lock__top {
+  padding: 10px 16px 14px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.lock__time {
+  margin: 0;
+  font-size: 72px;
+  font-weight: 200;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.lock__date {
+  margin: 6px 0 0;
+  font-size: 16px;
+}
+
+.lock__wall {
+  flex: 1;
+  display: grid;
+  place-items: center;
+}
+
+.lock__wall span {
+  display: grid;
+  place-items: center;
+  width: 128px;
+  height: 128px;
+  border: var(--linie);
+  border-radius: 50%;
+  background: var(--weiss);
+  color: var(--schwarz);
+  font: 800 42px var(--sans);
+  transform: rotate(10deg);
+  box-shadow: var(--schatten);
+}
+
+.lock__bottom {
+  padding: 22px 20px calc(22px + env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.slider {
+  position: relative;
+  max-width: 360px;
+  margin: 0 auto;
+  height: 64px;
+  padding: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  background: linear-gradient(#0c0c0c, #262626);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.slider__text {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding-left: 60px;
+  font-size: 22px;
+  color: transparent;
+  background: linear-gradient(100deg, #6f6f6f 40%, #ffffff 50%, #6f6f6f 60%) 0 0 / 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: lock-shimmer 2.4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes lock-shimmer {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -50% 0;
+  }
+}
+
+.slider__knob {
+  position: relative;
+  width: 64px;
+  height: 52px;
+  padding: 0;
+  border: 1px solid #888;
+  border-radius: 10px;
+  background: linear-gradient(#ffffff, #d9d9d9 50%, #c4c4c4 50%, #e6e6e6);
+  color: #7a7a7a;
+  font-size: 30px;
+  line-height: 1;
+  touch-action: none;
+  cursor: grab;
+}
+
+.slider__knob.is-snapping {
+  transition: transform 0.25s ease-out;
+}
+
+.lock.is-unlocking {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.lock.is-unlocking .lock__head {
+  transform: translateY(-100%);
+}
+
+.lock.is-unlocking .lock__bottom {
+  transform: translateY(100%);
 }
 
 @media (prefers-reduced-motion: reduce) {

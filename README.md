@@ -29,6 +29,8 @@ python3 -m http.server 8353
 ## Hinweise
 
 - Den „Alltag.exe reagiert nicht“-Dialog gibt es nur beim ersten Besuch. Wieder anzeigen über Startmenü → „Alltag beenden“ oder im Browser `localStorage.removeItem("abfahre-alltag")` ausführen.
+- Der Lockscreen („slide to abfahre“) kommt live nur auf dem Handy und einmal pro Tab. Lokal (`localhost`) kommt er bei jedem Laden, auch am Desktop, damit man ihn bearbeiten kann.
+- Beim Entsperren wird `sounds/unlock.mp3` abgespielt. Fehlt die Datei, bleibt es still.
 - YouTube blockiert das Jochen-Video lokal manchmal („Video nicht verfügbar“). Auf abfahre.de läuft es.
 - Fakten und Memes kommen von externen APIs, dafür braucht es Internet.
 - Handyansicht: in den Browser-Entwicklertools die Gerätesimulation einschalten, unter 720 px Breite wird der Desktop zum Homescreen.
