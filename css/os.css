@@ -396,6 +396,50 @@ button {
   text-align: center;
 }
 
+.sticker--rakete {
+  right: 330px;
+  bottom: 40px;
+  padding: 0;
+  border: 0;
+  background: none;
+  --r: 18deg;
+}
+
+.sticker--rakete::before {
+  top: 2px;
+}
+
+.sticker--rakete svg {
+  display: block;
+  overflow: visible;
+  stroke: var(--schwarz);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+
+.rakete__rumpf {
+  fill: var(--weiss);
+}
+
+.rakete__spitze,
+.rakete__flosse {
+  fill: var(--schwarz);
+}
+
+.rakete__flamme {
+  fill: var(--weiss);
+}
+
+.sticker--rakete text {
+  fill: var(--rot);
+  stroke: none;
+  font: 800 14px/1 var(--sans);
+  text-transform: none;
+  letter-spacing: -0.02em;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
 /* Taskleiste */
 
 .taskbar {

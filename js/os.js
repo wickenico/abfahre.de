@@ -34,7 +34,16 @@
 
   desktop.append(
     el(`<div class="sticker sticker--353" aria-hidden="true">353</div>`),
-    el(`<div class="sticker sticker--hoelle" aria-hidden="true">Hölle<br>Hölle<br>Hölle</div>`)
+    el(`<div class="sticker sticker--hoelle" aria-hidden="true">Hölle<br>Hölle<br>Hölle</div>`),
+    el(`<div class="sticker sticker--rakete" aria-hidden="true">
+      <svg viewBox="0 0 80 210" width="80" height="210">
+        <path class="rakete__flamme" d="M26 168 Q40 214 54 168 Q47 184 40 200 Q33 184 26 168Z" />
+        <path class="rakete__flosse" d="M18 118 L2 156 L2 174 L20 162Z M62 118 L78 156 L78 174 L60 162Z" />
+        <path class="rakete__rumpf" d="M40 4 C70 30 68 110 62 166 L18 166 C12 110 10 30 40 4Z" />
+        <path class="rakete__spitze" d="M40 4 C52 15 59 28 62 40 L18 40 C21 28 28 15 40 4Z" />
+        <text x="40" y="104" transform="rotate(-90 40 104)">abfahre.de</text>
+      </svg>
+    </div>`)
   );
 
   /* Taskleiste */
