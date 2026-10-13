@@ -39,31 +39,50 @@
 
   /* Taskleiste */
 
+  const currentPage = document.body.dataset.page;
+
   document.body.append(
     el(`
       <div class="taskbar">
-        <button class="start" type="button" aria-expanded="false" aria-controls="startmenu">abfahre</button>
-        <span class="taskbar__clock" aria-hidden="true"></span>
+        <nav class="taskbar__apps" aria-label="Taskleiste">
+          <button class="tb tb--start" type="button" aria-label="Start" title="Start" aria-expanded="false" aria-controls="startmenu">
+            <span class="tb__logo" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          </button>
+          ${APPS.map(
+            (a) =>
+              `<a class="tb" ${linkAttrs(a)} aria-label="${a.label}" title="${a.label}"${a.id === currentPage ? ' aria-current="page"' : ""}><span aria-hidden="true">${a.icon}</span></a>`
+          ).join("")}
+          <button class="tb" type="button" data-open-terminal data-tb-terminal aria-label="Terminal" title="Terminal"><span class="tb__mono" aria-hidden="true">&gt;_</span></button>
+        </nav>
+        <div class="taskbar__clock" aria-hidden="true"><span></span><span></span></div>
       </div>`),
     el(`
       <div class="startmenu" id="startmenu" hidden>
-        <a href="/">Desktop</a>
-        ${APPS.map((a) => `<a ${linkAttrs(a)}>${a.label}${a.external ? " ↗" : ""}</a>`).join("")}
-        <button type="button" data-open-terminal>Terminal</button>
-        <hr>
-        <a href="https://github.com/wickenico" target="_blank" rel="noopener">GitHub ↗</a>
-        <button type="button" data-alltag>Alltag beenden</button>
+        <p class="startmenu__title">Angeheftet</p>
+        <div class="startmenu__grid">
+          <a class="sm-app" href="/"><span class="sm-app__icon" aria-hidden="true">🏠</span>Desktop</a>
+          ${APPS.map((a) => `<a class="sm-app" ${linkAttrs(a)}><span class="sm-app__icon" aria-hidden="true">${a.icon}</span>${a.label}</a>`).join("")}
+          <button class="sm-app" type="button" data-open-terminal><span class="sm-app__icon sm-app__icon--mono" aria-hidden="true">&gt;_</span>Terminal</button>
+          <a class="sm-app" href="https://github.com/wickenico" target="_blank" rel="noopener"><span class="sm-app__icon" aria-hidden="true">🐙</span>GitHub</a>
+        </div>
+        <div class="startmenu__foot">
+          <span class="startmenu__user"><span class="startmenu__avatar" aria-hidden="true">A</span>abfahre.de</span>
+          <button class="startmenu__power" type="button" data-alltag aria-label="Alltag beenden" title="Alltag beenden">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 3v8"/><path d="M6.3 6.8a8 8 0 1 0 11.4 0"/></svg>
+          </button>
+        </div>
       </div>`)
   );
 
-  const clock = document.querySelector(".taskbar__clock");
+  const [clockTime, clockDate] = document.querySelectorAll(".taskbar__clock span");
+  clockTime.textContent = "04:20";
   const tick = () => {
-    clock.textContent = new Date().toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
+    clockDate.textContent = new Date().toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" });
   };
   tick();
-  setInterval(tick, 10000);
+  setInterval(tick, 60000);
 
-  const startBtn = document.querySelector(".start");
+  const startBtn = document.querySelector(".tb--start");
   const startMenu = document.getElementById("startmenu");
   const setMenu = (open) => {
     startMenu.hidden = !open;
@@ -237,13 +256,12 @@
 
     const time = lock.querySelector(".lock__time");
     const date = lock.querySelector(".lock__date");
+    time.textContent = "04:20";
     const update = () => {
-      const now = new Date();
-      time.textContent = now.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
-      date.textContent = now.toLocaleDateString("de-DE", { weekday: "long", day: "numeric", month: "long" });
+      date.textContent = new Date().toLocaleDateString("de-DE", { weekday: "long", day: "numeric", month: "long" });
     };
     update();
-    const timer = setInterval(update, 10000);
+    const timer = setInterval(update, 60000);
 
     const slider = lock.querySelector(".slider");
     const knob = lock.querySelector(".slider__knob");
@@ -320,6 +338,12 @@
     </section>`);
   desktop.append(terminal);
   wireWindow(terminal);
+
+  const terminalTb = document.querySelector("[data-tb-terminal]");
+  new MutationObserver(() => terminalTb.classList.toggle("is-running", !terminal.hidden)).observe(terminal, {
+    attributes: true,
+    attributeFilter: ["hidden"],
+  });
 
   const out = terminal.querySelector(".term__out");
   const input = terminal.querySelector(".term__input");
