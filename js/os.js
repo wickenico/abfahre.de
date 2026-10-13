@@ -333,6 +333,11 @@
     return p;
   }
 
+  function playSound(src, text) {
+    new Audio(src).play().catch(() => print("Ton konnte nicht abgespielt werden.", "err"));
+    print(`🔊 ${text}`, "ok");
+  }
+
   function go(href) {
     print(`öffne ${href} …`, "ok");
     setTimeout(() => (location.href = href), 400);
@@ -386,6 +391,8 @@
         confetti();
       }, 500);
     },
+    "sudo yes": () => playSound("/sounds/sudo-yes.mp3", "YES!"),
+    "sudo gönne": () => playSound("/sounds/sudo-goenne.mp3", "Gönne!"),
     "rm -rf alltag": () => {
       print("alltag entfernt.", "ok");
       confetti();
