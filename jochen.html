@@ -1,84 +1,71 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ff1a1a">
+  <title>Abfahre.de · Jochen</title>
+  <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+  <link rel="stylesheet" href="/css/os.css">
+  <style>
+    .video {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: var(--schwarz);
+    }
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/css/site.css">
-  <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+    .video iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .rick {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-top: var(--linie);
+      font: 13px var(--mono);
+    }
+
+    .rick iframe {
+      width: 96px;
+      height: 72px;
+      border: var(--linie);
+      border-radius: 6px;
+      pointer-events: none;
+    }
+  </style>
   <script data-ad-client="ca-pub-3761680934011190" async
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <title>Abfahre.de - Jochen</title>
 </head>
 
-<body style="background: red;">
-
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-      <a class="navbar-brand" href="#">Abfahre.de</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/jochen.html">Jochen</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/wolle.html">Wolle</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://github.com/wickenico" target="_blank"><i class="fa fa-github"></i></a>
-          </li>
-        </ul>
+<body data-page="jochen">
+  <main class="desktop">
+    <section class="win win--app" style="--x: 150px; --y: 32px; --w: 720px;" aria-labelledby="jochen-title">
+      <div class="win__bar">
+        <span class="win__title" id="jochen-title">jochen.exe</span>
+        <button class="win__close" type="button" aria-label="Jochen schließen">×</button>
       </div>
-    </div>
-  </nav>
+      <div class="win__body win__body--flush">
+        <div class="video">
+          <iframe src="https://www.youtube.com/embed/eBAymOWJQOg?autoplay=1" title="Never gonna give you up"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <div class="rick">
+          <iframe src="https://giphy.com/embed/olAik8MhYOB9K" title="Rick Astley tanzt" tabindex="-1"></iframe>
+          <span>Jochen gibt dich niemals auf.</span>
+        </div>
+      </div>
+    </section>
+  </main>
 
-  <div class="container video-container-wrapper">
-    <div class="embed-responsive embed-responsive-16by9">
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/eBAymOWJQOg?autoplay=1"
-        title="YouTube video player" frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen></iframe>
-    </div>
-  </div>
-
-  <div class="container gif-container-wrapper">
-    <div class="embed-responsive embed-responsive-16by9"></div>
-    <iframe src="https://giphy.com/embed/olAik8MhYOB9K" width="20%" height="20%" style="position:absolute"
-      frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
-    <p><a href="https://giphy.com/gifs/life-gets-down-olAik8MhYOB9K"></a></p>
-  </div>
-  </div>
-
-  <footer class="border-top footer fixed-bottom bg-red text-light text-center">
-    <div class="container">
-      <p>&copy; 2023 - Abfahre.de</p>
-    </div>
-  </footer>
-
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
-  <script src="/js/site.js"></script>
-
+  <script src="/js/os.js"></script>
 </body>
 
 </html>

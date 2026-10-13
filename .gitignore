@@ -1,0 +1,15 @@
+# Abhängigkeiten
+node_modules/
+
+# Editoren
+.idea/
+.vscode/
+
+# System
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*

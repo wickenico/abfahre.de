@@ -1,117 +1,77 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ff1a1a">
   <title>Abfahre.de</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="icon" type="image/x-icon" href="img/favicon.ico">
-  <style>
-    body {
-      background: red;
-    }
-
-    .navbar-nav .nav-link {
-      padding: 0.5rem 1rem;
-    }
-
-    .content-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 80vh;
-    }
-
-    .fact {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 100px;
-    }
-
-    .footer {
-      background-color: red;
-      color: white;
-    }
-  </style>
+  <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+  <link rel="stylesheet" href="/css/os.css">
 </head>
 
-<body>
-
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-      <a class="navbar-brand" href="#">Abfahre.de</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/jochen.html">Jochen</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/wolle.html">Wolle</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://shop353.myspreadshop.de/accessoires?q=D5" target="_blank">353 Shop</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="flappyeagle/index.html">FlappyEagle</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://github.com/wickenico" target="_blank"><i class="fa fa-github"></i></a>
-          </li>
-        </ul>
-
+<body data-page="start">
+  <main class="desktop">
+    <section class="win" style="--x: 150px; --y: 32px; --w: 400px;" aria-labelledby="fact-title">
+      <div class="win__bar">
+        <span class="win__title" id="fact-title">unnützes_wissen.txt</span>
+        <button class="win__close" type="button" aria-label="Fenster schließen">×</button>
       </div>
-    </div>
-  </nav>
+      <div class="win__body">
+        <p class="fact" id="fact" aria-live="polite">Lade unnützes Wissen …</p>
+        <button class="btn btn--primary" type="button" id="next-btn">Nochmal</button>
+      </div>
+    </section>
 
-  <div class="container content-container">
-    <div class="fact" id="fact"></div>
-    <div id="img" class="text-center">
-      <img src="#" id="random-meme" alt="Random Meme">
-    </div>
-  </div>
+    <section class="win" style="--x: 590px; --y: 64px; --w: 380px;" aria-labelledby="meme-title">
+      <div class="win__bar">
+        <span class="win__title" id="meme-title">meme.jpg</span>
+        <button class="win__close" type="button" aria-label="Fenster schließen">×</button>
+      </div>
+      <div class="win__body win__body--flush">
+        <div class="meme"><img id="meme" alt=""></div>
+        <p class="meme__caption" id="meme-caption">Lade Meme …</p>
+      </div>
+    </section>
+  </main>
 
-  <footer class="border-top footer fixed-bottom bg-red text-light text-center">
-    <div class="container">
-      <p>&copy; 2025 - Abfahre.de</p>
-    </div>
-  </footer>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
-  <script src="/js/site.js"></script>
+  <script src="/js/os.js"></script>
   <script>
-    $(document).ready(function () {
-      fetchRandomFact();
+    const factEl = document.getElementById("fact");
+    const memeImg = document.getElementById("meme");
+    const memeCaption = document.getElementById("meme-caption");
+    const nextBtn = document.getElementById("next-btn");
 
-      function fetchRandomFact() {
-        fetch("https://uselessfacts.jsph.pl/random.json")
-          .then(response => response.json())
-          .then(data => {
-            const randomFact = data.text;
-            const factElement = document.getElementById("fact");
-            factElement.innerText = randomFact;
-          })
-          .catch(error => {
-            console.error("Error fetching random fact:", error);
-          });
+    async function loadFact() {
+      try {
+        const data = await (await fetch("https://uselessfacts.jsph.pl/random.json?language=en")).json();
+        factEl.textContent = data.text;
+      } catch (error) {
+        factEl.textContent = "Kein unnützes Wissen geladen. Nochmal drücken.";
       }
+    }
+
+    async function loadMeme(tries = 3) {
+      try {
+        const data = await (await fetch("https://meme-api.com/gimme")).json();
+        if ((data.nsfw || data.spoiler) && tries > 1) return loadMeme(tries - 1);
+        const previews = data.preview || [];
+        memeImg.src = previews.length ? previews[previews.length - 1] : data.url;
+        memeImg.alt = data.title || "Zufälliges Meme";
+        memeCaption.textContent = `r/${data.subreddit} · ${data.title}`;
+      } catch (error) {
+        memeCaption.textContent = "Kein Meme geladen. Nochmal drücken.";
+      }
+    }
+
+    nextBtn.addEventListener("click", async () => {
+      nextBtn.disabled = true;
+      await Promise.all([loadFact(), loadMeme()]);
+      nextBtn.disabled = false;
     });
+
+    loadFact();
+    loadMeme();
   </script>
 </body>
 

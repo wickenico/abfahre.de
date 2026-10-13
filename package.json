@@ -1,0 +1,10 @@
+{
+  "name": "abfahre.de",
+  "private": true,
+  "scripts": {
+    "dev": "serve -l 8353"
+  },
+  "devDependencies": {
+    "serve": "^14.2.6"
+  }
+}
